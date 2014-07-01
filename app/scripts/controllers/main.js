@@ -2,30 +2,28 @@
 
 /**
  * @ngdoc function
- * @name editDistanceProjectApp.controller:MainCtrl
+ * @name stringcomparison.controller:MainCtrl
  * @description
  * # MainCtrl
- * Controller of the editDistanceProjectApp
+ * Controller of the stringcomparison
  */
- angular.module('editDistanceProjectApp')
+ angular.module('stringcomparison')
  .controller('MainCtrl', function ($scope) {
 
 	$scope.stringASanitized = '';
 	$scope.stringBSanitized = '';
+	$scope.insignificantCharacters = null;
+	$scope.significantCharacters = null;
 
 	$scope.getAllCommonStringsScopeBind = function(str1, str2){
-		console.log("Running....");
-
-		$scope.stringASanitized = $scope.sanitizeArbitrationInput(str1,$scope.insignificantCharacters,$scope.significantCharacters);
-		$scope.stringBSanitized = $scope.sanitizeArbitrationInput(str2,$scope.insignificantCharacters,$scope.significantCharacters);
-
+		$scope.stringASanitized = $scope.sanitizeArbitrationInput(str1, $scope.insignificantCharacters, $scope.significantCharacters);
+		$scope.stringBSanitized = $scope.sanitizeArbitrationInput(str2, $scope.insignificantCharacters, $scope.significantCharacters);
 		var returnObj = $scope.getAllCommonStrings($scope.stringASanitized, $scope.stringBSanitized);
 
 		$scope.lengthLong = returnObj.length;
 		$scope.sequenceLong = returnObj.sequence;
 		$scope.offset1Long = returnObj.offset1;
 		$scope.offset2Long = returnObj.offset2;
-		console.log("             Done")
 	};
 
 	/**
@@ -49,10 +47,13 @@
 	    for(var i=0; i<returnStr.length; i++){
 	    	if(!alphaNumericRegex.test(returnStr[i])){
 	    		// is not a letter or number
-	    		if(_insignificantCharacters && _.contains(insignificantCharacters,returnStr[i])){
+	    		if(insignificantCharacters && _.contains(insignificantCharacters, returnStr[i])){
 	    			returnStr[i] = ' ';
 	    		}
-	    		else if(_significantCharacters && !_.contains(significantCharacters, returnStr[i])){
+	    		else if(significantCharacters && _.contains(significantCharacters, returnStr[i])){
+	    			returnStr[i] = ' ';
+	    		}
+	    		else if(!insignificantCharacters || !_significantCharacters){
 	    			returnStr[i] = ' ';
 	    		}
 	    	}

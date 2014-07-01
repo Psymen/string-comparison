@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc overview
- * @name editDistanceProjectApp
+ * @name stringcomparison
  * @description
- * # editDistanceProjectApp
+ * # stringcomparison
  *
  * Main module of the application.
  */
 angular
-  .module('editDistanceProjectApp', []);
+  .module('stringcomparison', []);
