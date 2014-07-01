@@ -1,0 +1,76 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <!-- build:css styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css(.tmp) styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- endbuild -->
+</head>
+<body ng-app="editDistanceProjectApp">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+      <![endif]-->
+      <div class="container">
+        <form role="form" ng-submit="getAllCommonStringsScopeBind(stringALong, stringBLong)">
+          <div class="form-group">
+            <label for="stringALong">String A</label> {{stringALong}}
+            <input type="text" class="form-control" id="stringALong" ng-model="stringALong" placeholder="Enter first string" ng-required="true">
+          </div>
+          <div class="form-group">
+            <label for="stringBLong">String B</label>
+            <input type="text" class="form-control" id="stringBLong" ng-model="stringBLong" placeholder="Enter second string" ng-required="true">
+          </div>
+          <div class="form-group">
+            <label>Insignificant Characters</label>
+            <input type="text" class="form-control" ng-model="insignificantCharacters" placeholder="Insignificant">
+          </div>
+          <div class="form-group">
+            <label>Significant Characters</label>
+            <input type="text" class="form-control" ng-model="significantCharacters" placeholder="significant">
+          </div>
+          <hr>
+
+          <br>
+          <button type="submit" class="btn btn-lg btn-success">Compare <span class="glyphicon glyphicon-ok"></span></button>
+
+
+        </form>
+
+        <br>
+        <pre>Sanitized String A: {{stringASanitized}}</pre>
+        <pre>Sanitized String B: {{stringBSanitized}}</pre>
+        <pre>Length: {{lengthLong}}</pre>
+        <pre>Sequence: {{sequenceLong}}</pre>
+        <pre>Offset 1: {{offset1Long}}</pre>
+        <pre>Offset 2: {{offset2Long}}</pre>
+      </div>
+    </div>
+  </div>
+    <!--[if lt IE 9]>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <!-- endbuild -->
+  </body>
+  </html>
