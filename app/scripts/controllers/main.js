@@ -16,6 +16,7 @@
 	$scope.significantCharacters = null;
 
 	$scope.getAllCommonStringsScopeBind = function(str1, str2){
+		console.log("sanitizing strings....");
 		$scope.stringASanitized = $scope.sanitizeArbitrationInput(str1, $scope.insignificantCharacters, $scope.significantCharacters);
 		$scope.stringBSanitized = $scope.sanitizeArbitrationInput(str2, $scope.insignificantCharacters, $scope.significantCharacters);
 		var returnObj = $scope.getAllCommonStrings($scope.stringASanitized, $scope.stringBSanitized);
@@ -26,44 +27,48 @@
 		$scope.offset2Long = returnObj.offset2;
 	};
 
-	/**
-	 * This function accepts a string to be normalized with the appropriate parameters (both insignificant
-	 * and significant characters).
-	 * 
-	 * @param  (String) str                     The string for normalization
-	 * @param  (String) insignificantCharacters A series of insigificant characters, no delimiter
-	 * @param  (String) significantCharacters   A series of sigificant characters, no delimiter
-	 * @return (String)                         The normalized string
-	 */
-	$scope.sanitizeArbitrationInput = function(str, _insignificantCharacters, _significantCharacters){
-   
-	    // Note: a project can have insignificant characters or significant characters but not both
+  /**
+   * This function accepts a string to be normalized with the appropriate parameters (both insignificant
+   * and significant characters).
+   *
+   * @param  (String) str                     The string for normalization
+   * @param  (String) insignificantCharacters A series of insigificant characters, no delimiter
+   * @param  (String) significantCharacters   A series of sigificant characters, no delimiter
+   * @return (String)                         The normalized string
+   */
+  $scope.sanitizeArbitrationInput = function(str, _insignificantCharacters, _significantCharacters){
 
-	    var alphaNumericRegex = /^[a-z0-9]+$/i;
-	    var returnStr = str.split('');
-	    var insignificantCharacters = (_insignificantCharacters)? _insignificantCharacters.split('') : [];
-	    var significantCharacters = (_significantCharacters)? _significantCharacters.split('') : [];
-	   	
-	    for(var i=0; i<returnStr.length; i++){
-	    	if(!alphaNumericRegex.test(returnStr[i])){
-	    		// is not a letter or number
-	    		if(insignificantCharacters && _.contains(insignificantCharacters, returnStr[i])){
-	    			returnStr[i] = ' ';
-	    		}
-	    		else if(significantCharacters && _.contains(significantCharacters, returnStr[i])){
-	    			returnStr[i] = ' ';
-	    		}
-	    		else if(!insignificantCharacters || !_significantCharacters){
-	    			returnStr[i] = ' ';
-	    		}
-	    	}
-	    }
+      // Note: a project can have insignificant characters or significant characters but not both
 
-	    returnStr = returnStr.join('');
-		returnStr = returnStr.replace(/ +(?= )/g,''); // get rid of multiple spaces
+      var alphaNumericRegex = /^[a-z0-9]+$/i;
+      var returnStr = str.split('');
+      var insignificantCharacters = (_insignificantCharacters)? _insignificantCharacters.split('') : null;
+      var significantCharacters = (_significantCharacters)? _significantCharacters.split('') : null;
 
-	    return returnStr;
-	};
+      for(var i=0; i<returnStr.length; i++){
+        if(!alphaNumericRegex.test(returnStr[i])){
+          // is not a letter or number
+          if(insignificantCharacters && _.contains(insignificantCharacters, returnStr[i])){
+            // If this contains insignificant characters, replace with space
+            returnStr[i] = ' ';
+          }
+          else if(significantCharacters && !_.contains(significantCharacters, returnStr[i])){
+            // If significant characters have been specified and it is not in the significant characters list,
+            // then replace with space
+            returnStr[i] = ' ';
+          }
+          else if(!insignificantCharacters && !_significantCharacters){
+            // If nothing has been specificed, replace with space
+            returnStr[i] = ' ';
+          }
+        }
+      }
+
+      returnStr = returnStr.join('');
+      returnStr = returnStr.replace(/ +(?= )/g,''); // get rid of multiple spaces
+
+      return returnStr;
+  };
 
 	$scope.getAllCommonStrings = function(str1, str2){
 		var lengthLong = [],
